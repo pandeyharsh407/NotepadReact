@@ -26,14 +26,18 @@ const Editor = () => {
     };
 
     const saveToCache = () => {
-        const content = document.getElementById('editor-container').innerHTML;
-        localStorage.setItem('editorContent', content);
+        const editorContainer = document.getElementById('editor-container');
+        if (editorContainer) {
+            const content = editorContainer.innerHTML;
+            localStorage.setItem('editorContent', content);
+        }
     };
 
     const loadFromCache = () => {
         const content = localStorage.getItem('editorContent');
-        if (content) {
-            document.getElementById('editor-container').innerHTML = content;
+        const editorContainer = document.getElementById('editor-container');
+        if (editorContainer && content) {
+            editorContainer.innerHTML = content;
         }
     };
 
@@ -59,19 +63,15 @@ const Editor = () => {
         const filename = document.getElementById('filename-input').value || 'document';
         const content = document.getElementById('editor-container').innerHTML;
 
-        // Create a new Blob object with the content
         const blob = new Blob([content], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
 
-        // Create a temporary link element to trigger the download
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
         a.download = `${filename}.docx`;
 
-        // Append the link to the body and trigger the download
         document.body.appendChild(a);
         a.click();
 
-        // Cleanup
         document.body.removeChild(a);
         URL.revokeObjectURL(a.href);
     };
