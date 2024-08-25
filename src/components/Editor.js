@@ -154,7 +154,7 @@ const Editor = () => {
     ]);
 
     return (
-        <div>
+        <div className="pt-1 pb-1 px-1">
             <div id="editor-container" contentEditable="true">
                 {/* Editor content */}
             </div>
